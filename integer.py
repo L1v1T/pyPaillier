@@ -59,8 +59,12 @@ def isPrime_MR(u, T):
 #print(isPrime_MR(17, 10))
 
 # 求逆元
-def inverse(a, n):
-    a_ = fast_pow(a, n - 2, n)
+'''
+input: 待求逆元素 a, 模数 n, 模数的欧拉函数 euler_n
+output: a^(-1) mod n
+'''
+def inverse(a, n, euler_n):
+    a_ = fast_pow(a, euler_n - 1, n)
     return a_
 ### test inverse ###
 #print(inverse(3,7))
@@ -71,7 +75,7 @@ def randprime(bitlen):
     upbound = (1 << (bitlen + 1)) - 1
     while(True):
         rint = random.randint(lowbound, upbound)
-        if isPrime_MR(rint, 15):
+        if mod(rint, 2) == 1 and isPrime_MR(rint, 15):
             return rint
 ### test randprime ###
 #print(randprime(1000))
@@ -82,10 +86,12 @@ def swap(a, b):
 
 # 判断是否为偶数
 def is_even(a):
-    if (a%2) == 0:
+    if (mod(a, 2)) == 0:
         return True
     else:
         return False
+### test is_even ###
+#print(is_even(335))
 
 # 输出两个数的最大公因子
 # 使用 Stein 算法
@@ -101,17 +107,17 @@ def gcd(a, b):
             return 0
     k = 0
     while is_even(a) and is_even(b):
-        a /= 2
-        b /= 2
+        a = a >> 1
+        b = b >> 1
         k += 1
     if is_even(b):
         a, b = swap(a, b)
     while True:
         while is_even(a):
-            a /= 2
+            a = a >> 1
         if a < b:
             a, b = swap(a, b)
-        a = (a - b)/2
+        a = (a - b) >> 1
         if a == 0:
             d = int(b * (2**k))
             return d
@@ -120,6 +126,6 @@ def gcd(a, b):
 
 # 输出两个数的最小公倍数
 def lcm(a, b):
-    return int((a * b)/gcd(a, b))
+    return (a * b) // gcd(a, b)
 ### test lcm ###
 #print(lcm(142353,65134))
