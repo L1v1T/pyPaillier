@@ -12,8 +12,8 @@ python 3.x
 
 ## Get the code and start demo
 
-'git clone https://github.com/L1v1T/pyPaillier.git'
+`git clone https://github.com/L1v1T/pyPaillier.git`
 
-'cd pyPaillier'
+`cd pyPaillier`
 
-'python ./demo.py'
+`python ./demo.py`
