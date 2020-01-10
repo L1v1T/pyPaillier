@@ -1,19 +1,19 @@
 import integer
 
-# 函数 L = (x - 1) / n #
+# L function: L = (x - 1) / n #
 def funcL(x, n):
     return (x - 1) // n
 
-# 产生一个模 n 乘法循环群中的随机元素 #
+# generate a random element belongs to multiplicative group of integers modulo n #
 def sampleGen(n):
     g = integer.random.randint(1, n - 1)
     while integer.gcd(g, n) != 1:
         g = integer.random.randint(1, n - 1)
     return g
-# 密钥生成算法 #
+# key generation #
 '''
-input: 大整数 n 的比特长度
-output: 公钥(n, g) 和 私钥 (λ, μ)
+input: bit length of integer n
+output: public key(n, g) and private key (labmda, miu)
 '''
 def keyGen(sbit):
     p = integer.randprime(int(sbit/2))
@@ -44,14 +44,14 @@ print("public key:")
 print("n = " + str(n))
 print("g = " + str(g))
 print("private key:")
-print("λ = " + str(l))
-print("μ = " + str(m))
+print("labmda = " + str(l))
+print("miu = " + str(m))
 '''
 
-# 加密 #
+# Encryption #
 '''
-input: 明文消息 m, 公钥 n, g
-output: 密文 c
+input: plain text message m, public key n, g
+output: cipher text c
 '''
 def encrypt(m, n, g):
     if m < 0 or m >= n:
@@ -71,10 +71,10 @@ def encrypt(m, n, g):
     c = integer.mod(integer.fast_pow(g, m, n2) * integer.fast_pow(r, n, n2), n2)
     return c
 
-# 解密 #
+# Decryption #
 '''
-input: 密文 c, 公钥 n, g, 私钥 λ, μ
-output: 恢复明文 m_bar
+input: cipher text c, public key n, g, private key labmda, miu
+output: recovered plain text m_bar
 '''
 def decrypt(c, n, g, lamb, miu):
     n2 = n * n
@@ -85,10 +85,10 @@ def decrypt(c, n, g, lamb, miu):
     m_bar = integer.mod(funcL(integer.fast_pow(c, lamb, n2), n) * miu, n)
     return m_bar
 
-# 密文下的明文相加 #
+# homomorphic addition #
 '''
-input: 密文 c1, c2, 公钥 n
-output: 相加后的密文 c1 + c2
+input: cipher text c1, c2, public key n
+output: cipher text of addition result c1 + c2
 '''
 def plaintextAdd(c1, c2, n, g):
     n2 = n * n

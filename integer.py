@@ -1,19 +1,19 @@
-import math
 import random
 
-# 模运算 #
+# modulo #
 def mod(a, n):
     return int(a%n)
 
-# 快速模指数算法 #
+# Fast modular exponentiation #
 '''
-input: 底数 g , 指数 a 和模数 p
+input: base g , exponent a and modulo p
 output: (g**a)mod p
 '''
 def fast_pow(g, a, p):
     e = mod(a, p - 1)
     if e == 0:
         return 1
+    import math
     r = int(math.log2(e))# + 1 - 1
     x = g
     for i in range(0, r):
@@ -24,26 +24,26 @@ def fast_pow(g, a, p):
 ### test fast_pow ###
 #print(fast_pow(5, 12, 23))
 
-# Miller-Rabin检测 #
+# Miller-Rabin primality test #
 '''
-input: 大奇数 u 和大正整数 T
-output: 若 u 通过测试则输出 True，否则输出 False
+input: large integer u and large positive integer T
+output: if u pass the primality test, return True, else return False
 '''
 def isPrime_MR(u, T):    
-    # 计算 v 和 w ，使得 u - 1 = w * 2^v
+    # calculate v and w , let u - 1 = w * 2^v
     v = 0
     w = u - 1
     while mod(w, 2) == 0:
         v += 1
         w = w // 2
-    for j in range(1, T + 1):
+    for _ in range(1, T + 1):
         nextj = False
         a = random.randint(2, u - 1)
         b = fast_pow(a, w, u)
         if b == 1 or b == u - 1:
             nextj = True
             continue
-        for i in range(1, v):
+        for _ in range(1, v):
             b = mod(b**2, u)
             if b == u - 1:
                 nextj = True
@@ -58,9 +58,9 @@ def isPrime_MR(u, T):
 #print(isPrime_MR(23, 10))
 #print(isPrime_MR(17, 10))
 
-# 求逆元
+# inversion
 '''
-input: 待求逆元素 a, 模数 n, 模数的欧拉函数 euler_n
+input: group element a, modulo n, Euler function of modulo--euler_n
 output: a^(-1) mod n
 '''
 def inverse(a, n, euler_n):
@@ -69,7 +69,7 @@ def inverse(a, n, euler_n):
 ### test inverse ###
 #print(inverse(3,7))
 
-# 输出一个 'bitlen' 比特长的素数
+# output a 'bitlen'-bit prime
 def randprime(bitlen):
     lowbound = (1 << bitlen) + 1
     upbound = (1 << (bitlen + 1)) - 1
@@ -80,11 +80,11 @@ def randprime(bitlen):
 ### test randprime ###
 #print(randprime(1000))
 
-# 交换两个数
+# swap
 def swap(a, b):
     return b, a
 
-# 判断是否为偶数
+# even
 def is_even(a):
     if (mod(a, 2)) == 0:
         return True
@@ -93,8 +93,8 @@ def is_even(a):
 ### test is_even ###
 #print(is_even(335))
 
-# 输出两个数的最大公因子
-# 使用 Stein 算法
+# greatest common divisor
+# using Stein algorithm
 def gcd(a, b):
     if a < 0:
         a = -a
@@ -124,7 +124,7 @@ def gcd(a, b):
 ### test gcd ###
 #print(gcd(1543535,276465))
 
-# 输出两个数的最小公倍数
+# least common multiple
 def lcm(a, b):
     return (a * b) // gcd(a, b)
 ### test lcm ###
