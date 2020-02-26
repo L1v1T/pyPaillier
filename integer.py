@@ -58,17 +58,6 @@ def isPrime_MR(u, T):
 #print(isPrime_MR(23, 10))
 #print(isPrime_MR(17, 10))
 
-# inversion
-'''
-input: group element a, modulo n, Euler function of modulo--euler_n
-output: a^(-1) mod n
-'''
-def inverse(a, n, euler_n):
-    a_ = fast_pow(a, euler_n - 1, n)
-    return a_
-### test inverse ###
-#print(inverse(3,7))
-
 # output a 'bitlen'-bit prime
 def randprime(bitlen):
     lowbound = (1 << bitlen) + 1
@@ -129,3 +118,25 @@ def lcm(a, b):
     return (a * b) // gcd(a, b)
 ### test lcm ###
 #print(lcm(142353,65134))
+
+# inversion
+'''
+input: group element a, modulo n, Euler function of modulo--euler_n
+output: a^(-1) mod n
+'''
+def inverse(a, n):
+    s , old_s = 0, 1
+    t , old_t = 1, 0
+    r , old_r = n, a
+    
+    while r != 0:
+        q = old_r // r
+        old_r, r = r, old_r - q * r
+        old_s, s = s, old_s - q * s
+        old_t, t = t, old_t - q * t
+    
+    return mod(old_s, n)
+    
+### test inverse ###
+# -7*47 + 11*30 = 1
+# print(inverse(30,47))

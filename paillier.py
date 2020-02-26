@@ -28,7 +28,7 @@ def keyGen(sbit):
     g = sampleGen(n2)
     while integer.gcd(funcL(integer.fast_pow(g, lamb, n2), n), n) != 1:
         g = sampleGen(n2)
-    miu = integer.inverse(funcL(integer.fast_pow(g, lamb, n2), n), n, (p - 1) * (q - 1))
+    miu = integer.inverse(funcL(integer.fast_pow(g, lamb, n2), n), n)
     
     '''
     lamb = (p - 1) * (q - 1)
